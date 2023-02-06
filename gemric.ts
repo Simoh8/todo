@@ -1,4 +1,4 @@
-let names:string[]=['ian','elvis']
+let names:string[]=['ian','elvis'];
 
 let people:Array<string>=['ian ','elvis']
 

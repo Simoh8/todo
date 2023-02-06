@@ -1,4 +1,8 @@
-let Arraytasks= []
+
+
+const LOCAL_STORAGE_LIST_KEYS= 'task.Arraytasks'
+let Arraytasks =JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEYS)) || []
+
 
 function createtask(){
 let title = document.getElementById('task').value
@@ -17,23 +21,36 @@ let task = {
     taskend: enddate
     
 };
-Arraytasks.push(task)
- displaytask()
+
+ 
+Arraytasks.unshift(task)
+savedisplay()
 
 
 }
+function save(){
+    localStorage.setItem(LOCAL_STORAGE_LIST_KEYS, JSON.stringify(Arraytasks))
+}
+function savedisplay(){
+    save();
+    displaytask();
+}
 
 
- function displaytask() {
+ function displaytask() 
+ {
+
  let taskListElem = document.getElementById("tasks-list");
    taskListElem.innerHTML= "";
+   
+
 
  for(let i = 0; i < Arraytasks.length; i++){
 
     let task = Arraytasks[i];
 
     let taskElem = document.createElement("li");
-        taskElem.innerHTML =`Title: ${task.tasktitle} <br>  Description: ${task.taskdescription }<br> To Start On: ${task.taskstart}<br> AT: ${task.tasktime}<br>To Finish On: ${task.taskend} `;
+        taskElem.innerHTML =`Title: ${task.tasktitle} <br>  Description: ${task.taskdescription }<br> To Start On: ${task.taskstart}<br> AT: ${task.tasktime}<br>Due Date: ${task.taskend} `;
 
     let deleteBtn = document.createElement("button");
     let option =document.createElement("select")
@@ -41,7 +58,7 @@ Arraytasks.push(task)
     option.onselect=function (){
         displaytask()
     }
-deleteBtn.innerHTML ="Delete";
+deleteBtn.innerHTML ="Press When Done";
 
 deleteBtn.onclick = function(){
 deleteTask(i);
